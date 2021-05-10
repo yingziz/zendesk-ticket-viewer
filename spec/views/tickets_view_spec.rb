@@ -50,29 +50,31 @@ describe 'TicketsView' do
         { 'id' => 4, 'subject' => 'Sample ticket 4' },
         { 'id' => 5, 'subject' => 'Sample ticket 5' }
       ]
+      @expected_ticket_table = TTY::Table.new([
+        [1, 'Sample ticket 1', 'N/A', 'N/A', 'N/A'],
+        [2, 'Sample ticket 2', 'N/A', 'N/A', 'N/A'],
+        [3, 'Sample ticket 3', 'N/A', 'N/A', 'N/A'],
+        [4, 'Sample ticket 4', 'N/A', 'N/A', 'N/A'],
+        [5, 'Sample ticket 5', 'N/A', 'N/A', 'N/A']
+      ])
     end
 
     context 'when the given param is empty' do
       it 'displays table header without content' do
-        STDOUT.should_receive(:puts).with(nil)
+        expect(STDOUT).to receive(:puts).with(nil)
         @ticket_view.display(@empty_tickets)
       end
     end
 
-    #there should be a test case for table display, but I don't how to do with TTY
     context 'when the given param is no empty' do
       it 'displays table header with content' do
-#         STDOUT.should_receive(:puts).with('
-# ++----+-----------------+--------------+------------+----------+
-# +| id | subject         | requester_id | created_at | priority |
-# ++----+-----------------+--------------+------------+----------+
-# +| 1  | Sample ticket 1 |    N/A       |    N/A     |   N/A    |
-# +| 2  | Sample ticket 2 |    N/A       |    N/A     |   N/A    |
-# +| 3  | Sample ticket 3 |    N/A       |    N/A     |   N/A    |
-# +| 4  | Sample ticket 4 |    N/A       |    N/A     |   N/A    |
-# +| 5  | Sample ticket 5 |    N/A       |    N/A     |   N/A    |
-# ++----+-----------------+--------------+------------+----------+')
-#         @ticket_view.display(@tickets)
+        tickets_table = TTY::Table.new
+        expect(TTY::Table)
+          .to receive(:new)
+          .and_return tickets_table
+        @ticket_view.display(@tickets)
+
+        expect(tickets_table).to eq @expected_ticket_table
       end
     end
 
