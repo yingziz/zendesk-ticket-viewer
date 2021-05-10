@@ -1,4 +1,5 @@
 require_relative '../../lib/views/tickets_view'
+require 'tty/table'
 
 describe 'TicketsView' do
   before do
@@ -19,7 +20,7 @@ describe 'TicketsView' do
         'recipient' => nil,
         'requester_id' => 123
       }
-      @ticket_with_some_attributes = { 'id' => 1 }
+      @ticket_with_some_attributes = { 'id' => 1, 'status' => nil }
     end
 
     context "when a ticket contains all required attributes" do
@@ -30,11 +31,11 @@ describe 'TicketsView' do
       end
     end
 
-    context "when a ticket only contains some required attributes" do
-      it 'assigns nil to non-exist attributes' do
+    context "when a ticket only contains some required attributes or if value is nill" do
+      it 'assigns N/A to non-exist attributes or if value is nill' do
         expect(
           @ticket_view.fetch_ticket_info(@ticket_with_some_attributes)
-        ).to eq [1, nil, nil, nil, nil]
+        ).to eq [1, 'N/A', 'N/A', 'N/A', 'N/A']
       end
     end
   end
@@ -58,17 +59,18 @@ describe 'TicketsView' do
       end
     end
 
+    #there should be a test case for table display, but I don't how to do with TTY
     context 'when the given param is no empty' do
       it 'displays table header with content' do
 #         STDOUT.should_receive(:puts).with('
 # ++----+-----------------+--------------+------------+----------+
 # +| id | subject         | requester_id | created_at | priority |
 # ++----+-----------------+--------------+------------+----------+
-# +| 1  | Sample ticket 1 |              |            |          |
-# +| 2  | Sample ticket 2 |              |            |          |
-# +| 3  | Sample ticket 3 |              |            |          |
-# +| 4  | Sample ticket 4 |              |            |          |
-# +| 5  | Sample ticket 5 |              |            |          |
+# +| 1  | Sample ticket 1 |    N/A       |    N/A     |   N/A    |
+# +| 2  | Sample ticket 2 |    N/A       |    N/A     |   N/A    |
+# +| 3  | Sample ticket 3 |    N/A       |    N/A     |   N/A    |
+# +| 4  | Sample ticket 4 |    N/A       |    N/A     |   N/A    |
+# +| 5  | Sample ticket 5 |    N/A       |    N/A     |   N/A    |
 # ++----+-----------------+--------------+------------+----------+')
 #         @ticket_view.display(@tickets)
       end

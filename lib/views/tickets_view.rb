@@ -7,7 +7,7 @@ class TicketsView
     ticket_info = Array.new
 
     TICKETS_OVERVIEW_ATTRIBUTES.each do |attr|
-      ticket.key?(attr) ? ticket_info << ticket[attr] : ticket_info << nil
+      ticket_info << (ticket.key?(attr) && ticket[attr] ? ticket[attr] : 'N/A')
     end
     ticket_info
   end
