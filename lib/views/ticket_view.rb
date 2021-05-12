@@ -1,3 +1,5 @@
+require 'tty/prompt'
+
 class TicketView
   TICKET_ATTRIBUTES = %w[id type subject description created_at updated_at status]
 
