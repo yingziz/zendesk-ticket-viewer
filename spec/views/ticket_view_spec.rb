@@ -1,4 +1,5 @@
 require_relative '../../lib/views/ticket_view'
+require_relative '../../lib/models/ticket'
 require 'tty/prompt'
 require 'pastel'
 
@@ -9,7 +10,7 @@ describe 'TicketsView' do
 
   describe '#fetch_ticket_info' do
     before do
-      @ticket_with_all_attributes = {
+      @ticket_with_all_attributes = Ticket.new({
         'id' => 1,
         'external_id' => nil,
         'created_at' => '2021-05-04T01:44:29Z',
@@ -21,8 +22,8 @@ describe 'TicketsView' do
         'description' => 'Sample description.',
         'recipient' => nil,
         'requester_id' => 123
-      }
-      @ticket_with_some_attributes = { 'id' => 1, 'status' => nil }
+      })
+      @ticket_with_some_attributes = Ticket.new({ 'id' => 1, 'status' => nil })
     end
 
     context "when a ticket contains all required attributes" do
@@ -61,7 +62,7 @@ describe 'TicketsView' do
   describe '#display' do
     before do
       @nil_ticket = nil
-      @ticket = {
+      @ticket = Ticket.new({
         'id' => 1,
         'external_id' => nil,
         'created_at' => '2021-05-04T01:44:29Z',
@@ -73,7 +74,7 @@ describe 'TicketsView' do
         'description' => 'Sample description.',
         'recipient' => nil,
         'requester_id' => 123
-      }
+      })
     end
 
     context 'when the given param is nil -- the ticket is not exist' do

@@ -14,7 +14,8 @@ class TicketView
     TICKET_ATTRIBUTES.each do |attr|
       ticket_attr = Array.new
       ticket_attr << attr
-      ticket_attr << (ticket.key?(attr) && ticket[attr] ? ticket[attr] : 'N/A')
+      ticket_attr << (ticket.send(attr) ? ticket.send(attr) : 'N/A')
+      #ticket_attr << (ticket.key?(attr) && ticket[attr] ? ticket[attr] : 'N/A')
       ticket_info << ticket_attr
     end
     ticket_info

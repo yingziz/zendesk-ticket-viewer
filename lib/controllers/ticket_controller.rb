@@ -1,6 +1,7 @@
 require_relative '../gateways/ticket_gateway'
 require_relative '../views/tickets_view'
 require_relative '../views/ticket_view'
+require_relative '../models/ticket'
 
 class TicketController
   def initialize(email, token)
@@ -18,6 +19,7 @@ class TicketController
 
   def ticket(ticket_number)
     response = @ticket_gateway.fetch("https://lacyzhang.zendesk.com/api/v2/tickets/#{ticket_number}.json")
-    @ticket_view.display(response['ticket'])
+    ticket = response['ticket'] ? Ticket.new(response['ticket']) : nil
+    @ticket_view.display(ticket)
   end
 end
