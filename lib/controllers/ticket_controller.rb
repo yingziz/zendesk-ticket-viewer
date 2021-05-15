@@ -13,7 +13,11 @@ class TicketController
 
   def tickets(page_number)
     response = @ticket_gateway.fetch("https://lacyzhang.zendesk.com/api/v2/tickets.json?page=#{page_number}&per_page=25")
-    @tickets_view.display(response['tickets'])
+    tickets = []
+    response['tickets'].each do |ticket|
+      tickets << Ticket.new(ticket)
+    end
+    @tickets_view.display(tickets)
     response['next_page']
   end
 

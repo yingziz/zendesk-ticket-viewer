@@ -1,4 +1,5 @@
 require_relative '../../lib/views/tickets_view'
+require_relative '../../lib/models/ticket'
 require 'tty/table'
 
 describe 'TicketsView' do
@@ -8,7 +9,7 @@ describe 'TicketsView' do
 
   describe '#fetch_ticket_info' do
     before do
-      @ticket_with_all_attributes = {
+      @ticket_with_all_attributes = Ticket.new({
         'id' => 1,
         'external_id' => nil,
         'created_at' => '2021-05-04T01:44:29Z',
@@ -19,8 +20,8 @@ describe 'TicketsView' do
         'status' => 'open',
         'recipient' => nil,
         'requester_id' => 123
-      }
-      @ticket_with_some_attributes = { 'id' => 1, 'status' => nil }
+      })
+      @ticket_with_some_attributes = Ticket.new({ 'id' => 1, 'status' => nil })
     end
 
     context "when a ticket contains all required attributes" do
@@ -44,11 +45,11 @@ describe 'TicketsView' do
     before do
       @empty_tickets = []
       @tickets = [
-        { 'id' => 1, 'subject' => 'Sample ticket 1' },
-        { 'id' => 2, 'subject' => 'Sample ticket 2' },
-        { 'id' => 3, 'subject' => 'Sample ticket 3' },
-        { 'id' => 4, 'subject' => 'Sample ticket 4' },
-        { 'id' => 5, 'subject' => 'Sample ticket 5' }
+        Ticket.new({ 'id' => 1, 'subject' => 'Sample ticket 1' }),
+        Ticket.new({ 'id' => 2, 'subject' => 'Sample ticket 2' }),
+        Ticket.new({ 'id' => 3, 'subject' => 'Sample ticket 3' }),
+        Ticket.new({ 'id' => 4, 'subject' => 'Sample ticket 4' }),
+        Ticket.new({ 'id' => 5, 'subject' => 'Sample ticket 5' })
       ]
       @expected_ticket_table = TTY::Table.new([
         [1, 'Sample ticket 1', 'N/A', 'N/A', 'N/A'],
