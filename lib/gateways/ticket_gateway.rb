@@ -31,7 +31,7 @@ class TicketGateway
 
     JSON.parse(response.body)
   rescue => error
-    @prompt.error(error)
+    @prompt.error(error.message)
     exit
   end
 end

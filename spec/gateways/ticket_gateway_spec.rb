@@ -32,15 +32,21 @@ describe 'TicketGateway' do
       it 'should through error message' do
         ticket_gateway = TicketGateway.new(@correct_email, @correct_token)
         response = Net::HTTPError.new('401', 'ERROR')
-        expect(response).to receive(:code) { '401' }
+        expect(response).to receive(:code).at_least(1) { '401' }
         expect(response).to receive(:body) { "Couldn\'t authenticate you" }
 
         expect_any_instance_of(Net::HTTP)
           .to receive(:request) { response }
+        expect_any_instance_of(TTY::Prompt)
+          .to receive(:error)
+          .with("Error code: 401, Error message: Couldn't authenticate you")
 
-        expect(
+        # How to mock exit in Rspec
+        # https://stackoverflow.com/questions/1480537/how-can-i-validate-exits-and-aborts-in-rspec
+        lambda {
           ticket_gateway.fetch('https://lacyzhang.zendesk.com/api/v2/tickets.json')
-        ).to raise_error('Error code: 401, Error message: "Couldn\'t authenticate you" ')
+        }.should raise_error SystemExit
+
       end
     end
 
