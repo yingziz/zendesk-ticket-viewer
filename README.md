@@ -1,5 +1,5 @@
 # zendesk-ticket-viewer
-Zendesk Ticket Viewer Coding Challenge
+This Zendesk Ticket Viewer project is for Zendesk Internship Coding Challenge
 
 ## How to run app
 `ruby lib/app.rb`
@@ -10,36 +10,35 @@ Zendesk Ticket Viewer Coding Challenge
 ## Implemention details
 The goal of this challenge is to write a ticket viewer which allows the user to view their tickets.
 
-`app.rb` is the main entry point of this app
-`router.rb` controls the menus display and interactions with the user
+There are four requirements of this project:
+1. Connect to the Zendesk API via user email address and password.
+2. Parse JSON data returned by Zendesk API to get all the tickets from the user account.
+3. Display them in a list.
+4. View individual ticket details.
 
-- Connect to the Zendesk API via user email address and password
-`ticket_gateway.rb` is responsible for user verification and make API call
+The MVC pattern (Model, View, and Controller) is used in this app.
 
-- Parse JSON data returned by Zendesk API to get all the tickets from the user account
-`ticket_controller.rb` is responsible for fetching ticket or tickets according to the user's request,
-  and call `ticket_view.rb` or `tickets_view.rb` to display
-
-- Display them in a list
-`tickets_view.rb` displays tickets in one table
-
-- View individual ticket details
-`ticket_view.rb` displays individual ticket details
-
-The ticket model is created but has not been used.
+1. Model: `models/ticket.rb`, this code can hold raw data of ticket.
+2. View: `views/ticket_view.rb` and `views/tickets_view.rb` are made up of functions that display tickets data to user.
+3. Controller: `controllers/ticket_controller.rb` acts as a liaison between the Model and the View, fetching data and deciding what to display.
+It’s the brains of the application, and ties together the model and the view.
+4. There are few other classes:
+  - `app.rb` is the main entry point of this app.
+  - `router.rb` controls the menus display and interactions with the user.
+  - `ticket_gateway.rb` is responsible for user verification and make API call.
 
 ## What can be improved
 ### Performance
-1. Currently, offsets pagination is used, which will fetch one page, 25 tickets per page, at one time.
+Currently, offsets pagination is used, which will fetch one page, 25 tickets per page, at one time.
 But the app is fetching data whenever it has been called.
 However, if one page has been fetched, supposedly can be stored in memory to avoid multiple API calls.
 
 ### Security
-2. There is a security risk, as user email and token for API authentication are stored in the app and pushed to GitHub.
+There is a security risk, as user email and token for API authentication are stored in the app and pushed to GitHub.
 Should be a way to encrypt the email and token.
 
 ### Testing
-3. Only did unit tests and manual tests, but no auto integration test.
+Only did unit tests and manual tests, but no auto integration test.
 
 
 ## Flowchart
